@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Literal
 if TYPE_CHECKING:
     from molscribe import MolScribe
     from rdkit import Chem
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 logger = logging.getLogger("molscribe-server")
 
@@ -71,7 +71,8 @@ def base64_to_mol_data(model: MolScribe, base64_string: str) -> tuple[str, str]:
         return prediction["smiles"], prediction["molfile"]
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Main entrypoint."""
     import torch
     import uvicorn
     from fastapi import FastAPI
@@ -120,3 +121,7 @@ if __name__ == "__main__":
 
     logger.info("Starting server...")
     uvicorn.run(app, host="0.0.0.0", port=8001)  # noqa: S104
+
+
+if __name__ == "__main__":
+    main()

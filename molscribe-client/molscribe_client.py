@@ -42,10 +42,10 @@ def molscribe_client(
     if use_clipboard:
         pyperclip.copy(output)
     else:
-        doctyper.echo(output)
+        print(output)  # noqa: T201
 
 
-def cli():
+def cli() -> None:
     """CLI entrypoint."""
     import doctyper
 
