@@ -45,9 +45,14 @@ def molscribe_client(
         doctyper.echo(output)
 
 
-if __name__ == "__main__":
+def cli():
+    """CLI entrypoint."""
     import doctyper
 
     app = doctyper.SlimTyper()
     app.command()(molscribe_client)
     app()
+
+
+if __name__ == "__main__":
+    cli()

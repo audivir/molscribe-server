@@ -25,6 +25,9 @@ Repository = "https://github.com/audivir/molscribe-server"
 [project.optional-dependencies]
 dev = ["ruff", "mypy", "pytest", "coverage[toml]", "vulture"]
 
+[project.scripts]
+molscribe-client = "molscribe_client:cli"
+
 [tool.setuptools]
 dynamic = { version = { attr = "molscribe_client.__version__" } }
 py-modules = ["molscribe_client"]
