@@ -1,4 +1,4 @@
-"""Run API server for MolScribe."""
+"""Runs an API server for MolScribe."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ BBox = tuple[float, float, float, float]
 
 
 def get_bounding_box(mol: Chem.Mol) -> BBox:
-    """Get the bounding box of a RDKit molecule."""
+    """Gets the bounding box of an RDKit molecule."""
     conf = mol.GetConformer()
     positions = conf.GetPositions()
     if not all(z == 0 for _, _, z in positions):
@@ -31,7 +31,7 @@ def get_bounding_box(mol: Chem.Mol) -> BBox:
 
 
 def translate_mol(mol: Chem.Mol, other_bbox: BBox, mode: Literal["right", "below"]) -> Chem.Mol:
-    """Translate a RDKit molecule right or below the bounding box."""
+    """Translates an RDKit molecule to the right of or below the bounding box."""
     from rdkit.Geometry import Point3D
 
     this_bbox = get_bounding_box(mol)
@@ -55,7 +55,7 @@ def translate_mol(mol: Chem.Mol, other_bbox: BBox, mode: Literal["right", "below
 
 
 def base64_to_mol_data(model: MolScribe, base64_string: str) -> tuple[str, str]:
-    """Predict the SMILES string and Molfile from a base64 string.
+    """Predicts the SMILES string and Molfile from a base64 string.
 
     Args:
         model: Initialized MolScribe model.
@@ -94,7 +94,7 @@ def main() -> None:
 
     @app.post("/predict/smiles")
     def predict_as_smiles(images: str | list[str]) -> str:
-        """Predict the SMILES string from base64 strings."""
+        """Predicts the SMILES string from base64 strings."""
         if isinstance(images, str):
             images = [images]
         smiles = [base64_to_mol_data(model, image)[0] for image in images]
@@ -102,7 +102,7 @@ def main() -> None:
 
     @app.post("/predict/molfile")
     def predict_as_molfile(images: str | list[str]) -> str:
-        """Predict the Molfile from base64 strings."""
+        """Predicts the Molfile from base64 strings."""
         if isinstance(images, str):
             images = [images]
 
@@ -112,7 +112,7 @@ def main() -> None:
         bbox = get_bounding_box(final)
         mode: Literal["right", "below"] = "right"
         for raw_mol in mols[1:]:
-            # put the next mol next to the previous one or below if second column
+            # places the next mol next to the previous one, or below for the second column.
             mol = translate_mol(raw_mol, bbox, mode)
             final = Chem.CombineMols(final, mol)
             mode = "below" if mode == "right" else "right"

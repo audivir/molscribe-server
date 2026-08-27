@@ -1,4 +1,4 @@
-"""Predict the molfile or smiles from images."""
+"""Predicts the Molfile or SMILES from images."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from typing import Literal
 __version__ = "0.1.0"
 
 
-def molscribe_client(
+def molscribe_client(  # noqa: PLR0913, PLR0917
     mode: Literal["molfile", "smiles"],
     server: str,
     port: int,
@@ -18,7 +18,7 @@ def molscribe_client(
     use_stdin: bool = False,
     use_clipboard: bool = False,
 ) -> None:
-    """Predict the molfile or smiles from images.
+    """Predicts the Molfile or SMILES from images.
 
     Args:
         mode: Return type of the prediction.
